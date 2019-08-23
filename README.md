@@ -27,5 +27,9 @@ Thread control with wait/notify. Producer/consumer
 
 
 2. Make the necessary adjustments so that the solution uses the CPU more efficiently, taking into account that - for now - production is slow and consumption is fast. Verify with JVisualVM that the CPU consumption is reduced. 
-	
+
+	![Imagenes](https://github.com/danielrodriguezvillalba/ARSW-Laboratorio2/blob/master/Imagenes/LAB2parteMejorada.PNG)
+
+	`Se hizo uso de varios bloqueos de la queue en los hilos de producer y costumer para poder reducir el desempeño de la CPU, tal como puede verse en la imagen usando el Java Visual VM.`
+
 3. Make the producer now produce very fast, and the consumer consumes slow. Taking into account that the producer knows a Stock limit (how many elements he should have, at most in the queue), make that limit be respected. Review the API of the collection used as a queue to see how to ensure that this limit is not exceeded. Verify that, by setting a small limit for the 'stock', there is no high CPU consumption or errors.
