@@ -60,7 +60,15 @@ Thread control with wait/notify. Producer/consumer
 
 3. Run the application and verify how the ‘pause and check’ option works. Is the invariant fulfilled?
 
-	``
+	* Primer pause and check
+
+	![Imagenes](https://github.com/danielrodriguezvillalba/ARSW-Laboratorio2/blob/master/Imagenes/First time.PNG)
+	
+	* Segundo pause and check
+	
+	![Imagenes](https://github.com/danielrodriguezvillalba/ARSW-Laboratorio2/blob/master/Imagenes/NextTime.PNG)
+
+	`El invariante no se cumple por el momento, la suma de la vida global siempre esta cambiando`
 
 4. A first hypothesis that the race condition for this function (pause and check) is presented is that the program consults the list whose values ​​it will print, while other threads modify their values. To correct this, do whatever is necessary so that, before printing the current results, all other threads are paused. Additionally, implement the ‘resume’ option.
 5. Check the operation again (click the button many times). Is the invariant fulfilled or not ?.
