@@ -30,6 +30,18 @@ Thread control with wait/notify. Producer/consumer
 
 	![Imagenes](https://github.com/danielrodriguezvillalba/ARSW-Laboratorio2/blob/master/Imagenes/LAB2parteMejorada.PNG)
 
-	`Se hizo uso de varios bloqueos de la queue en los hilos de producer y costumer para poder reducir el desempe�o de la CPU, tal como puede verse en la imagen usando el Java Visual VM.`
+	`Se hizo uso de varios bloqueos de la queue en los hilos de producer y costumer para poder reducir el desempeño de la CPU, tal como puede verse en la imagen usando el Java Visual VM.`
 
 3. Make the producer now produce very fast, and the consumer consumes slow. Taking into account that the producer knows a Stock limit (how many elements he should have, at most in the queue), make that limit be respected. Review the API of the collection used as a queue to see how to ensure that this limit is not exceeded. Verify that, by setting a small limit for the 'stock', there is no high CPU consumption or errors.
+	
+	![Imagenes](https://github.com/danielrodriguezvillalba/ARSW-Laboratorio2/blob/master/Imagenes/lab2VvmPart1pt3-stocklimitRunning.png)
+	
+	`Se ejecuto el programa con el stocklimit original y con produccion rapida, el porcentaje de consumo de CPU fue de 12% a 14%. Inicialmente el consumo de CPU se debe unicamente al productor (en los primeros 5 segundos) `
+	
+	![Imagenes](https://github.com/danielrodriguezvillalba/ARSW-Laboratorio2/blob/master/Imagenes/lab2VvmPart1pt3-stocklimitthousand.png)
+	
+	`Se ejecuto el programa con el stocklimit mas chico de 1000 y con produccion rapida, el porcentaje de consumo de CPU fue exactamente el mismo, adicionalemte no se produjo ningun error`
+	
+	![Imagenes](https://github.com/danielrodriguezvillalba/ARSW-Laboratorio2/blob/master/Imagenes/lab2VvmPart1pt3-stocklimitTen.png)
+	
+	`Se ejecuto el programa con el stocklimit pequeño de 10 y con produccion rapida, el porcentaje de consumo de CPU fue exactamente el mismo, adicionalemte no se produjo ningun error`
