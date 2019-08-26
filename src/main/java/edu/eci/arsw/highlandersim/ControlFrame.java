@@ -35,6 +35,8 @@ public class ControlFrame extends JFrame {
     private JLabel statisticsLabel;
     private JScrollPane scrollPane;
     private JTextField numOfImmortals;
+    
+    private static Object monitor = new Object();
 
     /**
      * Launch the application.
@@ -93,6 +95,7 @@ public class ControlFrame extends JFrame {
                  */
                 int sum = 0;
                 for (Immortal im : immortals) {
+                	im.setPausa(true);
                     sum += im.getHealth();
                 }
 
@@ -111,7 +114,10 @@ public class ControlFrame extends JFrame {
                 /**
                  * IMPLEMENTAR
                  */
-
+            	monitor.notifyAll();
+            	for (Immortal im : immortals) {
+                	im.setPausa(false);
+                }
             }
         });
 
@@ -163,6 +169,10 @@ public class ControlFrame extends JFrame {
 
     }
 
+	public static Object getMonitor() {
+		return monitor;
+	}
+
 }
 
 class TextAreaUpdateReportCallback implements ImmortalUpdateReportCallback{
@@ -189,5 +199,7 @@ class TextAreaUpdateReportCallback implements ImmortalUpdateReportCallback{
         );
 
     }
+    
+    
     
 }

@@ -14,6 +14,8 @@ public class Immortal extends Thread {
     private final List<Immortal> immortalsPopulation;
 
     private final String name;
+    
+    private boolean enPausa;
 
     private final Random r = new Random(System.currentTimeMillis());
 
@@ -25,32 +27,38 @@ public class Immortal extends Thread {
         this.immortalsPopulation = immortalsPopulation;
         this.health = health;
         this.defaultDamageValue=defaultDamageValue;
+        this.enPausa = false;
     }
 
     public void run() {
 
         while (true) {
-            Immortal im;
-
-            int myIndex = immortalsPopulation.indexOf(this);
-
-            int nextFighterIndex = r.nextInt(immortalsPopulation.size());
-
-            //avoid self-fight
-            if (nextFighterIndex == myIndex) {
-                nextFighterIndex = ((nextFighterIndex + 1) % immortalsPopulation.size());
-            }
-
-            im = immortalsPopulation.get(nextFighterIndex);
-
-            this.fight(im);
-
-            try {
-                Thread.sleep(1);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
+        	if(!enPausa) {
+        	
+	            Immortal im;
+	
+	            int myIndex = immortalsPopulation.indexOf(this);
+	
+	            int nextFighterIndex = r.nextInt(immortalsPopulation.size());
+	
+	            //avoid self-fight
+	            if (nextFighterIndex == myIndex) {
+	                nextFighterIndex = ((nextFighterIndex + 1) % immortalsPopulation.size());
+	            }
+	
+	            im = immortalsPopulation.get(nextFighterIndex);
+	
+	            this.fight(im);
+	
+	            try {
+	                Thread.sleep(1);
+	            } catch (InterruptedException e) {
+	                e.printStackTrace();
+	            }
+        	}
+        	else {
+        		pausar();
+        	}
         }
 
     }
@@ -74,7 +82,23 @@ public class Immortal extends Thread {
     public int getHealth() {
         return health;
     }
+    
+    public void pausar() {
+		if (enPausa) {
+			synchronized (ControlFrame.getMonitor()) {
+				try {
+					ControlFrame.getMonitor().wait();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		enPausa=false;
+	}
 
+    public void setPausa( boolean p) {
+    	enPausa = p;
+    }
     @Override
     public String toString() {
 
