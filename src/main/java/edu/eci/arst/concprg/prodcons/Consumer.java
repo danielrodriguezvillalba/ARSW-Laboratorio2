@@ -6,6 +6,8 @@
 package edu.eci.arst.concprg.prodcons;
 
 import java.util.Queue;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -14,29 +16,64 @@ import java.util.Queue;
 public class Consumer extends Thread {
 
 	private Queue<Integer> queue;
+	private int consumerStockLimit;
 
-	public Consumer(Queue<Integer> queue) {
+	public Consumer(Queue<Integer> queue, long stockLimit) {
 		this.queue = queue;
+		consumerStockLimit = (int) stockLimit;
+
 	}
 
 	@Override
 	public void run() {
+//		optimalConsumption();
+		lowConsumption();
+//		originalConsumption();
+	}
+
+	public void originalConsumption() {
 		while (true) {
-			synchronized (queue) {
+
+			if (queue.size() > 0) {
+				int elem = queue.poll();
+				System.out.println("Consumer consumes " + elem);
+			}
+
+		}
+	}
+
+	public void optimalConsumption() {
+		synchronized (queue) {
+			while (true) {
 				if (queue.size() > 0) {
 					int elem = queue.poll();
 					System.out.println("Consumer consumes " + elem);
-				}
-				else {
+					queue.notify();
+				} else {
 					try {
 						queue.wait();
 					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}
 			}
 		}
-			
+	}
+
+	public void lowConsumption() {
+
+		while (true) {
+			if (queue.size() > 0) {
+				int elem = queue.poll();
+				System.out.println("Consumer consumes " + elem);				
+			}
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException ex) {
+				Logger.getLogger(Producer.class.getName()).log(Level.SEVERE, null, ex);
+			}
+
+		}
+
 	}
 }

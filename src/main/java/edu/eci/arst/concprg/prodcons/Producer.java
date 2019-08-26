@@ -22,6 +22,10 @@ public class Producer extends Thread {
 	private Random rand = null;
 	private final long stockLimit;
 
+	public long getStockLimit() {
+		return stockLimit;
+	}
+
 	public Producer(Queue<Integer> queue, long stockLimit) {
 		this.queue = queue;
 		rand = new Random(System.currentTimeMillis());
@@ -30,13 +34,16 @@ public class Producer extends Thread {
 
 	@Override
 	public void run() {
+//		optimalProduction();
+		fastProduction();
+//		originalProduction();
+	}
+
+	public void originalProduction() {
 		while (true) {
-			synchronized (queue) {
-					dataSeed = dataSeed + rand.nextInt(100);
-					System.out.println("Producer added " + dataSeed);
-					queue.add(dataSeed); 
-					queue.notify();
-				}
+			dataSeed = dataSeed + rand.nextInt(100);
+			System.out.println("Producer added " + dataSeed);
+			queue.add(dataSeed);
 
 			try {
 				Thread.sleep(1000);
@@ -44,7 +51,39 @@ public class Producer extends Thread {
 				Logger.getLogger(Producer.class.getName()).log(Level.SEVERE, null, ex);
 			}
 		}
+	}
 
+	public void optimalProduction() {
+		synchronized (queue) {
+			while (true) {
+				if (queue.size() == 0) {
+					dataSeed = dataSeed + rand.nextInt(100);
+					System.out.println("Producer added " + dataSeed);
+					queue.add(dataSeed);
+					queue.notify();
+				} else {
+					try {
+						queue.wait();
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException ex) {
+					Logger.getLogger(Producer.class.getName()).log(Level.SEVERE, null, ex);
+				}
+			}
 		}
 	}
 
+	public void fastProduction() {
+		while (true) {
+			if (queue.size() < 10) {
+				dataSeed = dataSeed + rand.nextInt(100);
+				System.out.println("Producer added " + dataSeed);
+				queue.add(dataSeed);				
+			}
+		}
+	}
+}
