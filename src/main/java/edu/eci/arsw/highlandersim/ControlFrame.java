@@ -36,12 +36,13 @@ public class ControlFrame extends JFrame {
     private JScrollPane scrollPane;
     private JTextField numOfImmortals;
     
-    private static Object monitor = new Object();
+    private static Object monitor;
 
     /**
      * Launch the application.
      */
     public static void main(String[] args) {
+    	monitor = new Object();
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
@@ -96,7 +97,9 @@ public class ControlFrame extends JFrame {
                 int sum = 0;
                 for (Immortal im : immortals) {
                 	im.setPausa(true);
-                    sum += im.getHealth();
+                }
+                for (Immortal im : immortals) {
+                	sum += im.getHealth();
                 }
 
                 statisticsLabel.setText("<html>"+immortals.toString()+"<br>Health sum:"+ sum);
@@ -114,10 +117,13 @@ public class ControlFrame extends JFrame {
                 /**
                  * IMPLEMENTAR
                  */
-            	monitor.notifyAll();
-            	for (Immortal im : immortals) {
-                	im.setPausa(false);
-                }
+            	synchronized (monitor) {
+            		monitor.notifyAll();
+                	for (Immortal im : immortals) {
+                    	im.setPausa(false);
+                    }
+				}
+            	
             }
         });
 
