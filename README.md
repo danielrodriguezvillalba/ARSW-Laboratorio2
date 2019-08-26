@@ -62,7 +62,7 @@ Thread control with wait/notify. Producer/consumer
 
 	* Primer pause and check
 
-	![Imagenes](https://github.com/danielrodriguezvillalba/ARSW-Laboratorio2/blob/master/Imagenes/First-time.PNG)
+	![Imagenes](https://github.com/danielrodriguezvillalba/ARSW-Laboratorio2/blob/master/Imagenes/First%20time.PNG)
 	
 	* Segundo pause and check
 	
