@@ -26,10 +26,13 @@ public class ControlFrame extends JFrame {
 
     private static final int DEFAULT_IMMORTAL_HEALTH = 100;
     private static final int DEFAULT_DAMAGE_VALUE = 10;
+    
+    public static boolean stop;
 
-    private JPanel contentPane;
+    private JPanel contentPane,contentPanel;
 
     private List<Immortal> immortals;
+    private List<Immortal> inicial;
 
     private JTextArea output;
     private JLabel statisticsLabel;
@@ -139,7 +142,14 @@ public class ControlFrame extends JFrame {
         JButton btnStop = new JButton("STOP");
         btnStop.setForeground(Color.RED);
         toolBar.add(btnStop);
-
+        btnStop.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	for (Immortal im : immortals) {
+                	im.setPausa(true);
+                }
+                stop = true;
+            }
+        });
         scrollPane = new JScrollPane();
         contentPane.add(scrollPane, BorderLayout.CENTER);
 
@@ -166,6 +176,7 @@ public class ControlFrame extends JFrame {
                 Immortal i1 = new Immortal("im" + i, il, DEFAULT_IMMORTAL_HEALTH, DEFAULT_DAMAGE_VALUE,ucb);
                 il.add(i1);
             }
+            inicial = il;
             return il;
         } catch (NumberFormatException e) {
             JOptionPane.showConfirmDialog(null, "Número inválido.");
