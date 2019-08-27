@@ -91,4 +91,4 @@ Correct the previous problem WITHOUT using synchronization, since making access 
 
 `La implementacion del metodo stop se realiza de esta manera y verificando esa condicion de que el stop sea falso siempre.`
 
-	![Imagenes](https://github.com/danielrodriguezvillalba/ARSW-Laboratorio2/blob/master/Imagenes/BotonStop.PNG)
+![Imagenes](https://github.com/danielrodriguezvillalba/ARSW-Laboratorio2/blob/master/Imagenes/BotonStop.PNG)
