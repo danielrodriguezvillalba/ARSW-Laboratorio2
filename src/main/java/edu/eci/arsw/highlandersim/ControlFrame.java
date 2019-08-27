@@ -117,13 +117,12 @@ public class ControlFrame extends JFrame {
                 /**
                  * IMPLEMENTAR
                  */
-            	synchronized (monitor) {
-            		monitor.notifyAll();
+            	synchronized (ControlFrame.getMonitor()) {
+            		ControlFrame.getMonitor().notifyAll();
                 	for (Immortal im : immortals) {
                     	im.setPausa(false);
                     }
-				}
-            	
+				}            	
             }
         });
 
