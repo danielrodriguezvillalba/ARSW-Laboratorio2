@@ -87,6 +87,8 @@ Thread control with wait/notify. Producer/consumer
 Analyzing the simulation operation scheme, could this create a race condition? Implement the functionality, run the simulation and see what problem arises when there are many 'immortals' in it. Write your conclusions about it in the file ANSWERS.txt. 
 Correct the previous problem WITHOUT using synchronization, since making access to the shared list of immortals sequential would make simulation extremely slow. 
 
+	`Se elimino cada inmortal que moria(o sea tenia vida 0), pero al final el ultimo inmortal peleaba consigo mismo y por ende tambien se removia de la poblacion de inmortales, por esta razon al final en el panel de estadisticas no aparecen inmortales y la vida global es cero [No se soluciono el error]`
+
 11. To finish, implement the STOP option.
 
 	`La implementacion del metodo stop se realiza de esta manera y verificando esa condicion de que el stop sea falso siempre.`
