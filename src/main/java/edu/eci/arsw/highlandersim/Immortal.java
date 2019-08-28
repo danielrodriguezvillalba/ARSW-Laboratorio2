@@ -33,9 +33,8 @@ public class Immortal extends Thread {
 	public void run() {
 
 		while (true) {
-			
 			if (!ControlFrame.stop) {
-				
+
 				if (!enPausa) {
 
 					Immortal im;
@@ -43,12 +42,13 @@ public class Immortal extends Thread {
 					int myIndex = immortalsPopulation.indexOf(this);
 
 					int nextFighterIndex = r.nextInt(immortalsPopulation.size());
+//					System.out.println("size :" + immortalsPopulation.size());
 
 					// avoid self-fight
 					if (nextFighterIndex == myIndex) {
 						nextFighterIndex = ((nextFighterIndex + 1) % immortalsPopulation.size());
 					}
-
+					
 					im = immortalsPopulation.get(nextFighterIndex);
 
 					this.fight(im);
@@ -62,42 +62,45 @@ public class Immortal extends Thread {
 					pausar();
 				}
 			}
-			
 		}
-
 	}
 
 	public void fight(Immortal i2) {
-		if(this.getId() < i2.getId()) {
+		if (this.getId() < i2.getId()) {
 			synchronized (i2) {
 				synchronized (this) {
 					hagalo(i2);
 				}
-				
+
 			}
-		}
-		else {
+		} else {
 			synchronized (this) {
 				synchronized (i2) {
 					hagalo(i2);
 				}
 			}
 		}
-		
+
 	}
-	
+
 	public void hagalo(Immortal i2) {
 		if (i2.getHealth() > 0) {
 			i2.changeHealth(i2.getHealth() - defaultDamageValue);
 			this.health += defaultDamageValue;
 			updateCallback.processReport("Fight: " + this + " vs " + i2 + "\n");
 		} else {
-			updateCallback.processReport(this + " says:" + i2 + " is already dead!\n");
-			immortalsPopulation.remove(i2);
-			enPausa = true;
+			if(this.health == 300) {
+				updateCallback.processReport(this + " says:"  + " I win!\n");
+				enPausa = true;
+			} else {
+				updateCallback.processReport(this + " says:" + i2 + " is already dead!\n");
+				immortalsPopulation.remove(i2);
+				
+				enPausa = true;
+			}			
 		}
 	}
-	
+
 	public void changeHealth(int v) {
 		health = v;
 	}
